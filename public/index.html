@@ -6,12 +6,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      /* Deal with Flash of Unstyled Content (FOUC). See styles.css for more. */
+      html {
+        visibility: hidden;
+        opacity: 0;
+      }
+    </style>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-three-fifths is-offset-one-fifth">
+            <header>
+              <h1 class="title">Getting Things Done!</h1>
+            </header>
+            <div id="app"></div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- built files will be auto injected -->
   </body>
 </html>
