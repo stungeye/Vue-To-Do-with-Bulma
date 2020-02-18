@@ -3,6 +3,10 @@ header {
   margin-bottom: 3rem;
 }
 
+nav {
+  margin-top: 2rem;
+}
+
 /* FOUC fix when paired with the CSS in the index.html style tag. */
 html {
   visibility: visible;

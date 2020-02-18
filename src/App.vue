@@ -16,7 +16,13 @@
         </button>
       </div>
     </div>
-    <list-items :to-do-items="toDoItems" />
+
+    <list-items
+      :to-do-items="toDoItems"
+      @delete-item="deleteItem"
+      @toggle-item-completion="toggleItemCompletion"
+      @clear-completed-items="clearCompletedItems"
+    />
   </div>
 </template>
 
@@ -26,6 +32,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ListItems from "@/components/ListItems.vue";
+import serializedStorage from "@/serializedStorage.js";
 
 import "./assets/sass/bulma-import.scss";
 import "./assets/sass/global.scss";
@@ -40,8 +47,15 @@ export default {
   data: function() {
     return {
       newUserItem: "",
-      toDoItems: [{ text: "this" }, { text: "that" }]
+      toDoItems: serializedStorage.fetch()
     };
+  },
+
+  watch: {
+    toDoItems: {
+      handler: serializedStorage.save,
+      deep: true
+    }
   },
 
   methods: {
@@ -55,9 +69,26 @@ export default {
       });
 
       this.newUserItem = "";
+    },
+
+    clearCompletedItems: function() {
+      this.toDoItems = this.toDoItems.filter(toDo => !toDo.done);
+    },
+
+    deleteItem: function(toDo) {
+      this.toDoItems = this.toDoItems.filter(
+        item => item.timestamp !== toDo.timestamp
+      );
+    },
+
+    toggleItemCompletion: function(toDo) {
+      this.toDoItems = this.toDoItems.map(item => {
+        if (item.timestamp === toDo.timestamp) {
+          item.done = !item.done;
+        }
+        return item;
+      });
     }
   }
 };
 </script>
-
-<style lang="scss"></style>
