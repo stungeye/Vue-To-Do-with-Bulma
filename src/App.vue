@@ -12,8 +12,7 @@
 
       <div class="control">
         <button class="button is-primary" @click="addNewUserItem">
-          <!--<FontAwesomeIcon icon="{faPlusCircle}" /> -->
-          ADD
+          <font-awesome-icon icon="plus-circle" />
         </button>
       </div>
     </div>
@@ -34,8 +33,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "./assets/sass/bulma-import.scss";
 import "./assets/sass/global.scss";
+
+library.add(faPlusCircle);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 export default {
   name: "ToDoVue",
